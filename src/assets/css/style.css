@@ -1,0 +1,174 @@
+/*
+
+    页面分辨率 3840*1080
+
+*/
+
+@font-face {
+  font-family: "DIN Condensed";
+  src: url("../fonts/DINCondensed-Bold.woff2") format("woff2"),
+    url("../fonts/DINCondensed-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+.bignum {
+  font-family: "DIN Condensed";
+  font-size: 22px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Microsoft YaHei";
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.full {
+  position: relative;
+  width: 3840px;
+  height: 1080px;
+  background: url("../images/bg2.png") no-repeat center / 100% 100%;
+}
+
+/* 地图 */
+
+.full .map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* 头部标题 */
+
+.full .head {
+  position: absolute;
+  width: 100%;
+  height: 137px;
+  background: url("../images/head.png") no-repeat center / 100% 100%;
+}
+
+.full .head .title {
+  position: absolute;
+  left: 50%;
+  top: 26px;
+  transform: translateX(-50%);
+  font-size: 50px;
+  font-family: "Microsoft YaHei";
+  font-weight: bold;
+  color: #fefefe;
+  /* text-shadow: 3px 5px 5px rgba(10, 19, 41, 0.42); */
+  background: linear-gradient(0deg, #ffffff 0%, #04f3e5 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.full .head .weather {
+  position: absolute;
+  font-size: 28px;
+  font-family: "Microsoft YaHei";
+  font-weight: bold;
+  color: #cdd6ec;
+  left: 90px;
+  bottom: 25px;
+}
+
+.full .head .slogon {
+  width: 368px;
+  height: 91px;
+  position: absolute;
+  left: 14%;
+  bottom: 34px;
+}
+
+.full .head .time {
+  position: absolute;
+  font-size: 28px;
+  font-weight: bold;
+  color: #cdd6ec;
+  right: 68px;
+  bottom: 36px;
+}
+
+/* 左侧面板区 */
+
+.panel-title {
+  font-size: 40px;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(0deg, #ffffff 0%, #04f3e5 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.panel-title img {
+  width: 46px;
+  height: 48px;
+  vertical-align: middle;
+}
+
+.full .left {
+  position: absolute;
+  left: 20px;
+  top: 137px;
+}
+
+.left .command-center {
+  position: absolute;
+  width: 617px;
+  height: 260px;
+  background: url("../images/command-center.png") no-repeat center bottom / 100%;
+}
+
+.left .content {
+  width: 100%;
+  height: 204px;
+  box-sizing: border-box;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.left .content .item {
+  box-sizing: border-box;
+  padding-left: 85px;
+}
+
+.left .content .item:first-child {
+  background: url("../images/tang.png") no-repeat left center / 83px;
+}
+.left .content .item:nth-child(2) {
+  background: url("../images/xu.png") no-repeat left center / 83px;
+}
+.left .content .item:nth-child(3) {
+  background: url("../images/jin.png") no-repeat left center / 83px;
+}
+
+.left .content .item .title {
+  font-size: 22px;
+  font-weight: 400;
+  color: #cdd6ec;
+}
+
+.left .content .item .pos {
+  font-size: 22px;
+  font-weight: 400;
+  color: #cdd6ec;
+}
+
+.left .content .item .name {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0DEED7;
+}
