@@ -216,9 +216,9 @@ $(function () {
                         roam: false,
                         //视角缩放比例
                         aspectScale: 1,
-                        zoom: 1.3,
+                        zoom: 1.1,
                         // center: [121.470192, 31.115188],
-                        layoutCenter: ['50%', '30%'],
+                        layoutCenter: ['50%', '40%'],
                         layoutSize: '100%',
                         scaleLimit: {
                             min: 1,
@@ -255,9 +255,9 @@ $(function () {
                         roam: false,
                         //视角缩放比例
                         aspectScale: 1,
-                        zoom: 1.3,
+                        zoom: 1.1,
                         // center: [121.470192, 31.115188],
-                        layoutCenter: ['50.1%', '31%'],
+                        layoutCenter: ['50.1%', '41%'],
                         layoutSize: '100%',
                         scaleLimit: {
                             min: 1,
@@ -297,9 +297,9 @@ $(function () {
                         roam: false,
                         //视角缩放比例
                         aspectScale: 1,
-                        zoom: 1.3,
+                        zoom: 1.1,
                         // center: [121.470192, 31.115188],
-                        layoutCenter: ['50.2%', '32%'],
+                        layoutCenter: ['50.2%', '42%'],
                         layoutSize: '100%',
                         scaleLimit: {
                             min: 1,
