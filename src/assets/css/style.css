@@ -454,3 +454,214 @@ body {
   width: 100%;
   height: 100%;
 }
+
+/* 今日事件 */
+.left .today-events {
+  position: absolute;
+  width: 617px;
+  height: 212px;
+  left: 640px;
+  background: url("../images/today-events.png") no-repeat center bottom / 100%;
+  bottom: 0;
+}
+
+.left .today-events .content {
+  height: 120px;
+  padding: 0 18px;
+  background: url("../images/today-events2.png") no-repeat left center / auto
+    100%;
+  background-origin: content-box;
+  margin-top: 18px;
+}
+
+.left .today-events .content .sub-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffffff;
+  padding-left: 10px;
+}
+
+.left .today-events .content .tb-head {
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: 24px;
+  color: #cdd6ec;
+  height: 40px;
+  align-items: center;
+}
+.left .today-events .content .tb-head span {
+  flex: 1;
+  text-align: center;
+}
+.left .today-events .content .tb-head span:nth-child(4) {
+  flex: 3;
+}
+.left .today-events .content .tb-head span:nth-child(5) {
+  flex: 1.5;
+}
+
+.left .today-events .content .tb-body {
+  height: 50px;
+  overflow: hidden;
+}
+
+.left .today-events .content .tb-row {
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: 24px;
+  color: #cdd6ec;
+}
+.left .today-events .content .tb-row span {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.left .today-events .content .tb-row span:nth-child(4) {
+  flex: 3;
+}
+.left .today-events .content .tb-row span:nth-child(5) {
+  flex: 1.5;
+}
+
+.left .today-events .content .tb-row span:nth-child(-n + 3) {
+  font-size: 40px;
+  font-family: "DIN Condensed";
+  font-weight: bold;
+  color: #00caff;
+}
+
+/* 地图上的图例 */
+
+.full .legend {
+  position: absolute;
+  top: 180px;
+  left: 1330px;
+  font-size: 22px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.full .legend .item {
+  height: 47px;
+  line-height: 47px;
+  width: 202px;
+  padding-left: 50px;
+  margin-bottom: 10px;
+}
+
+.full .legend .item:nth-child(1) {
+  background: url("../images/legend-3.png") no-repeat left center / auto 100%;
+}
+.full .legend .item:nth-child(2) {
+  background: url("../images/legend-2.png") no-repeat left center / auto 100%;
+}
+.full .legend .item:nth-child(3) {
+  background: url("../images/legend-1.png") no-repeat left center / auto 100%;
+}
+.full .legend .item:nth-child(4) {
+  background: url("../images/legend-4.png") no-repeat left center / auto 100%;
+}
+
+/* 右上角的关闭按钮 */
+.full .close {
+  width: 32px;
+  height: 32px;
+  background: url("../images/close.png") no-repeat center / 100%;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* 右侧的数据面板 */
+
+.full .right {
+  position: absolute;
+  right: 20px;
+  top: 137px;
+  bottom: 10px;
+}
+
+.full .right .four-cates {
+  position: absolute;
+  width: 617px;
+  height: 348px;
+  right: 0;
+  top: 0;
+  background: url("../images/four-cate.png") no-repeat center bottom / 100%;
+}
+
+.full .right .trend-ana {
+  position: absolute;
+  width: 617px;
+  height: 316px;
+  right: 0;
+  top: 360px;
+  background: url("../images/trend-ana.png") no-repeat center bottom / 100%;
+}
+
+/* 智能应用 */
+.full .right .int-apply {
+  position: absolute;
+  width: 617px;
+  height: 246px;
+  right: 0;
+  bottom: 0;
+  background: url("../images/int-apply.png") no-repeat center bottom / 100%;
+}
+
+.full .right .int-apply .content {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.full .right .int-apply .content .item {
+  font-size: 22px;
+  color: #cdd6ec;
+  flex: 1;
+  text-align: center;
+}
+
+.full .right .int-apply .content .item img {
+  width: 67px;
+  height: 72px;
+}
+
+.full .right .int-apply .content .item .num {
+  font-size: 40px;
+  font-family: "DIN Condensed";
+  font-weight: bold;
+  color: #00caff;
+}
+
+.full .right .int-apply .content .item .num span {
+  font-size: 20px;
+  font-family: "Microsoft YaHei";
+  font-weight: 400;
+  color: #cdd6ec;
+}
+
+.full .right .end-emission {
+  position: absolute;
+  width: 617px;
+  height: 348px;
+  right: 640px;
+  top: 0;
+  background: url("../images/end-emission.png") no-repeat center bottom / 100%;
+}
+
+.full .right .monitor-video {
+  position: absolute;
+  width: 617px;
+  height: 578px;
+  right: 640px;
+  bottom: 0;
+  background: url("../images/monitor-video.png") no-repeat center bottom / 100%;
+}

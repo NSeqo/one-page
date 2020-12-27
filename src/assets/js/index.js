@@ -21,6 +21,14 @@ function http(params) {
     }
 }
 
+
+// 右上角的关闭按钮
+$('.full .close').click(function () {
+    if (window.confirm('确认关闭当前页面？')) {
+        window.close()
+    }
+})
+
 // 四分类颜色  #42c7ff  #f4dc3d #41ee49  #f1505f
 
 
@@ -247,7 +255,7 @@ $(function () {
                             }
                         }
                     },
-        
+
                     // 重影 叠层放置两个
                     {
                         zlevel: -1,
@@ -369,7 +377,7 @@ $(function () {
                                 curveness: .3 //尾迹线条曲直度
                             }
                         },
-        
+
                         data: lines_data
 
                     }
@@ -382,6 +390,6 @@ $(function () {
     }
 
 
-    
+
 
 })  
