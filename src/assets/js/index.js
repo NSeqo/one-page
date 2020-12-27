@@ -390,6 +390,77 @@ $(function () {
     }
 
 
+    // 上月各类垃圾占比
+    function lastMonthProp(data) {
+        data = data || []
+        var charts = echarts.init(document.getElementById('last-month-prop'));
+        var option = {
+            tooltip: {
+                show: false,
+            },
+            legend: {
+                orient: 'vertical',
+                right: 0,
+                bottom: 0,
+                itemGap:5,
+                itemWidth:20,
+                itemHeight:10,
+                data: ['干垃圾', '湿垃圾', '可回', '有害'],
+                textStyle: {
+                    color: '#CDD6EC',
+                    fontSize: 8 * base,
+                    fontFamily: "Microsoft YaHei"
+                }
+            },
+            series: [
+                {
+                    type: 'pie',
+                    radius: ['50%', '65%'],
+                    center: ['45%', '45%'],
+                    avoidLabelOverlap: true,
+                    label: {
+                        show: true,
+                        position: 'outside',
+                        formatter: '{d}%',
+                        textStyle: {
+                            fontSize: 13 * base
+                        }
+                    },
+                    hoverAnimation: false,
+                    labelLine: {
+                        show: false,
+                        length: 3,
+                        length2: 3,
+                    },
+                    data: data
+                }
+            ]
+        };
+        charts.setOption(option);
+    }
 
 
+    /** 四分类清运量 */
+    http({
+        url: 'openness/api/v2/oneweb/clean',
+        callback: function (res) {
+            var dayData = res.day || [];
+            var monData = res.mon || {};
+
+            // 今日清运量
+            $('.right .four-cates .content .left-part .box .item:nth-child(1) .num').html((dayData['dry'] || 0) + 't')
+            $('.right .four-cates .content .left-part .box .item:nth-child(2) .num').html((dayData['wet'] || 0) + 't')
+            $('.right .four-cates .content .left-part .box .item:nth-child(3) .num').html((dayData['recy'] || 0) + 't')
+            $('.right .four-cates .content .left-part .box .item:nth-child(4) .num').html((dayData['harm'] || 0) + 't')
+
+            // 上月垃圾分类占比
+            lastMonthProp([
+                { value: monData['dry'], name: '干垃圾', itemStyle: { color: '#D9AD2A' }, label: { color: '#00FDFA', fontFamily: "DIN Condensed" } },
+                { value: monData['wet'], name: '湿垃圾', itemStyle: { color: '#CD6748' }, label: { color: '#00FDFA', fontFamily: "DIN Condensed" } },
+                { value: monData['recy'], name: '可回', itemStyle: { color: '#3482D3' }, label: { color: '#00FDFA', fontFamily: "DIN Condensed" } },
+                { value: monData['harm'], name: '有害', itemStyle: { color: '#D33C55' }, label: { color: '#00FDFA', fontFamily: "DIN Condensed" } },
+            ]);
+
+        }
+    })
 })  

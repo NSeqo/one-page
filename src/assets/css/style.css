@@ -587,6 +587,7 @@ body {
   bottom: 10px;
 }
 
+/* 四分类清运量 */
 .full .right .four-cates {
   position: absolute;
   width: 617px;
@@ -594,6 +595,91 @@ body {
   right: 0;
   top: 0;
   background: url("../images/four-cate.png") no-repeat center bottom / 100%;
+}
+
+.full .right .four-cates .content {
+  height: 290px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.full .right .four-cates .content .left-part {
+  height: 100%;
+  width: 250px;
+  position: relative;
+}
+.full .right .four-cates .content .left-part::before {
+  position: absolute;
+  content: "";
+  height: 0;
+  width: 147px;
+  border-bottom: 1px dashed #00caff;
+  left: 55px;
+  top: 147px;
+}
+
+.full .right .four-cates .content .left-part::after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 147px;
+  border-right: 1px dashed #00caff;
+  left: 126px;
+  top: 76px;
+}
+
+.full .right .four-cates .content .left-part .title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fefeff;
+  display: inline-block;
+  background: url("../images/sub-title.png") no-repeat left center / auto 26px;
+  padding-left: 15px;
+}
+
+.full .right .four-cates .content .left-part .box {
+  height: 240px;
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.full .right .four-cates .content .left-part .box .item {
+  font-size: 22px;
+  font-weight: 400;
+  color: #cdd6ec;
+  width: 45%;
+  text-align: center;
+}
+
+.full .right .four-cates .content .left-part .box .item img {
+  width: 30px;
+}
+.full .right .four-cates .content .left-part .box .item .num {
+  font-size: 48px;
+  font-family: "DIN Condensed";
+  font-weight: bold;
+  color: #f5c025;
+}
+
+.full .right .four-cates .content .right-part {
+  width: 350px;
+}
+
+.full .right .four-cates .content .right-part .title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fefeff;
+  display: inline-block;
+  background: url("../images/sub-title.png") no-repeat left center / auto 26px;
+  padding-left: 15px;
+}
+
+.full .right .four-cates .content .right-part .box {
+  height: 240px;
 }
 
 .full .right .trend-ana {
@@ -657,6 +743,8 @@ body {
   background: url("../images/end-emission.png") no-repeat center bottom / 100%;
 }
 
+/* 视频监控 */
+
 .full .right .monitor-video {
   position: absolute;
   width: 617px;
@@ -664,4 +752,33 @@ body {
   right: 640px;
   bottom: 0;
   background: url("../images/monitor-video.png") no-repeat center bottom / 100%;
+}
+
+.full .right .monitor-video .content {
+  height: 520px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px;
+}
+
+.full .right .monitor-video .content .item {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fefeff;
+  text-align: center;
+}
+
+.full .right .monitor-video .content .item .name {
+  margin-top: 10px;
+  background: url("../images/video-name.png") no-repeat center / auto 35px;
+}
+
+.full .right .monitor-video .content .item video {
+  width: 284px;
+  height: 154px;
+  border: 2px solid #00caff;
+  border-radius: 2px;
+  object-fit: cover;
 }
