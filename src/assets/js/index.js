@@ -21,6 +21,8 @@ function http(params) {
     }
 }
 
+var alertLine = '#c12937';	// 警戒线颜色
+
 
 // 右上角的关闭按钮
 $('.full .close').click(function () {
@@ -652,6 +654,495 @@ $(function () {
 
 
 
-    
+    /**末端排放 */
+    function pieChart(data, unit) {
+        data = data || [  /* 趋势图 */
+            {
+                name: '黎明',
+                value: 2000
+            },
+            {
+                name: '老港一期',
+                value: 8000
+            },
+            {
+                name: '天马',
+                value: 7300
+            },
+            {
+                name: '老港二期',
+                value: 1600
+            },
+        ];
+        var pieChartInstance = echarts.init(document.getElementById('pie-chart'));
+        pieChartInstance.clear();
+        var pie2color = ['#38b9f1', '#42c6b9'];
+        var pie10color = ['#ca245a', '#cb6e1d', '#cbb418', '#83c025', '#009a3f', '#11a492', '#1799ce', '#0f74b8', '#a923b6', '#c72282'];
+        var options = {
+            series: [
+                {
+                    color: data.length > 2 ? pie10color : pie2color,
+                    type: 'pie',
+                    radius: data.length > 2 ? ['35%', '45%'] : [0, '65%'],
+                    avoidLabelOverlap: true,
+                    hoverAnimation: false,
+                    center: data.length > 2 ? ['50%', '70%'] : ['50%', '50%'],
+                    label: {
+                        // alignTo:'edge',
+                        // margin:'5%',
+                        show: true,
+                        color: '#fff',
+                        formatter: [
+                            '{b|{b}}',
+                            '{hr|}',
+                            '{c|{c}' + unit + '} {d|{d}%}'
+                        ].join('\n'),
+                        rich: {
+                            b: {
+                                align: 'center',
+                                lineHeight: 8 * base,
+                                // height: 18 * base,
+                                color: '#fff',
+                                fontSize: 8 * base,
+                                fontFamily: "DIN Condensed"
+
+                            },
+                            hr: {
+                                borderColor: '#fff',
+                                width: '100%',
+                                borderWidth: 1,
+                                height: 0
+                            },
+                            c: {
+                                lineHeight: 14 * base,
+                                // height: 20 * base,
+                                fontSize: 9 * base,
+                                color: '#00CAFF',
+                                fontFamily: "DIN Condensed"
+                            },
+                            d: {
+                                lineHeight: 14 * base,
+                                // height: 20 * base,
+                                fontSize: 9 * base,
+                                color: '#00CAFF',
+                                fontFamily: "DIN Condensed",
+                            },
+                        }
+                    },
+
+                    labelLine: {
+                        show: true,
+                        // length1: 1,
+                        lineStyle: {
+                            color: '#fff'
+                        }
+                    },
+                    data: data
+                }
+            ]
+        };
+        pieChartInstance.setOption(options);
+    }
+
+    function barChart(data) {
+        data = data || [  /* 趋势图 */
+            {
+                "value2": "21088.92",
+                "value3": "16800",
+                "id": 1,
+                "type": 8,
+                "value": "一期"
+            },
+            {
+                "value2": "17402.87",
+                "value3": "16800",
+                "id": 2,
+                "type": 8,
+                "value": "二期"
+            },
+            {
+                "value2": "21819.66",
+                "value3": "16800",
+                "id": 3,
+                "type": 8,
+                "value": "天马"
+            },
+            {
+                "value2": "22167.18",
+                "value3": "16800",
+                "id": 4,
+                "type": 8,
+                "value": "金山"
+            },
+            {
+                "value2": "20774.37",
+                "value3": "16800",
+                "id": 5,
+                "type": 8,
+                "value": "御桥"
+            },
+            {
+                "value2": "19366.78",
+                "value3": "16800",
+                "id": 6,
+                "type": 8,
+                "value": "黎明"
+            },
+            {
+                "value2": "17662.14",
+                "value3": "16800",
+                "id": 7,
+                "type": 8,
+                "value": "嘉定"
+            },
+
+        ];
+
+        // debugger;
+
+        var markLineValue1 = 40;
+        var markLineValue2 = 43;
+
+        var barChartInstance = echarts.init(document.getElementById('bar-chart'));
+        barChartInstance.clear();
+
+        var options = {
+            tooltip: {
+                trigger: 'axis',
+                backgroundColor: '#091E60',
+                textStyle: {
+                    fontSize: 10 * base
+                }
+            },
+            color: ['#38B9F1', '#A07DFC'],
+            legend: {
+                show: false,
+                data: ['实际量', '指标量'],
+                right: '3%',
+                top: '3%',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    padding: [2, 3, 0, 0]
+                },
+                icon: 'rect'
+            },
+            grid: {
+                top: '15%',
+                left: '3%',
+                right: '5%',
+                bottom: '15%',
+                containLabel: true
+            },
+            xAxis: {
+                nameTextStyle: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                type: 'category',
+                boundaryGap: true,
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#3281D2',
+                        width:2
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                data: data.map(function (v) {
+                    return v.name
+                })
+            },
+            yAxis: {
+                name: "(ug/m3)",
+                nameTextStyle: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                type: 'value',
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#3281D2',
+                        width:2
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    fontSize: 10* base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                splitLine: {
+                    show: false,
+                    lineStyle: {
+                        color: '#232D5E'
+                    }
+                }
+            },
+            series: [
+                {
+                    data: data.map(function (value, index, array) {
+                        return {
+                            name: value.name,
+                            value: value.value,
+                            itemStyle: {
+                                barBorderRadius: 5,
+                                color: value.value >= markLineValue2 ? '#DE1A4C' : value.value >= markLineValue1 ? '#F5C025' : '#18dad8'
+                            }
+                        }
+                    }),
+
+                    type: 'bar',
+                    barWidth: 15 * base,
+                    markLine: {
+                        symbol: 'none',
+                        label: {
+                            show: false
+                        },
+                        data: [
+                            {
+                                yAxis: markLineValue1,
+                                lineStyle: {
+                                    color: '#F5C025',
+                                    type: 'dashed'
+                                },
+                            },
+                            {
+                                yAxis: markLineValue2,
+                                lineStyle: {
+                                    color: alertLine,
+                                    type: 'dashed'
+                                },
+                            }
+                        ]
+                    }
+                },
+            ]
+        };
+        barChartInstance.setOption(options);
+    }
+
+    // 电力和排放两个一级切换
+    var emiss_first = true; // 两个标记量用来确定第一次点击调用函数
+    var elec_first = true;
+    $('.end-emission .switches').on('click', 'span', function () {
+        if ($(this).hasClass('active')) return
+        $(this).addClass('active')
+        $(this).siblings().removeClass('active')
+
+        var index = $(this).index()
+
+        if (index === 0) {
+            $('.end-emission .elec').hide()
+            $('.end-emission .emiss').show()
+            debugger;
+            emiss_first && $('.end-emission .emiss .tbs span:first-child').trigger('click')
+            emiss_first = false
+        } else {
+            $('.end-emission .elec').show()
+            $('.end-emission .emiss').hide()
+            elec_first && $('.end-emission .elec .tbs span:first-child').trigger('click')
+            elec_first = false
+        }
+
+    })
+
+    $('.end-emission .switches span:first-child').trigger('click');
+
+    // 二级切换 电力，排放
+
+    function render(type, data) {
+        data = data.filter(function (val) {
+            return val.type === type
+        })
+        var sum = data.reduce(function (acc, curr) {
+            return acc + curr.value;
+        }, 0);
+        var unit = type == '发电量' ? '万度' : 'm³';
+        $('.end-emission .elec-sum').show();
+        $('.end-emission .elec-sum').html(
+            `
+        	总量：<span class="num">${sum.toFixed(2)}</span>${unit}
+            `
+        )
+        pieChart(data, unit);
+    }
+
+    function render2(type, data) {
+        data = data || [];
+        data = data.filter(function (val) {
+            return val.type == type
+        })
+        var sum = data.reduce(function (acc, curr) {
+            return acc + curr.value;
+        }, 0)
+
+        $('.end-emission .avag-index').show()
+        $('.end-emission .avag-index').html(
+            `
+        	平均指数：<span>${(sum / data.length).toFixed(0)}</span> 
+            `
+        )
+        // //console.log('data', data);
+        barChart(data);
+    }
+
+    function render3(type, data) {
+        data = data || [];
+        data = data.filter(function (val) {
+            return val.type == type
+        });
+        // 发电总量
+        $('.end-emission .elec-sum').hide();
+        var pieChartInstance = echarts.init(document.getElementById('pie-chart'));
+        var options = {
+            tooltip: {
+                trigger: 'axis',
+                backgroundColor: '#091E60',
+                fontSize: 10 * base
+            },
+            color: ['#38B9F1', '#A07DFC'],
+            grid: {
+                top: '15%',
+                left: '3%',
+                right: '5%',
+                bottom: '5%',
+                containLabel: true
+            },
+            xAxis: {
+                nameTextStyle: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                type: 'category',
+                boundaryGap: true,
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#3281D2',
+                        width: 2
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                data: data.map(function (v) {
+                    return v.name
+                })
+            },
+            yAxis: {
+                name: "(t)",
+                nameTextStyle: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                type: 'value',
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#3281D2',
+                        width: 2
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                splitLine: {
+                    show: false,
+                    lineStyle: {
+                        color: '#232D5E'
+                    }
+                }
+            },
+            series: [
+                {
+                    data: data.map(function (value, index, array) {
+                        return {
+                            name: value.name,
+                            value: value.value,
+                        }
+                    }),
+                    type: 'bar',
+                    barWidth: 20,
+                },
+            ]
+        };
+        pieChartInstance.setOption(options);
+    }
+
+    // 电力
+    $('.end-emission .emiss .tbs').on('click', 'span', function () {
+        if ($(this).hasClass('active')) return
+
+        $(this).addClass('active')
+        $(this).siblings().removeClass('active')
+
+        var index = $(this).index();
+        http({
+            url: 'openness/api/v2/oneweb/green',
+            callback(res) {
+                if (index === 0) {
+                    // 发电量
+                    render('发电量', res.data)
+                } else if (index === 1) {
+                    render('沼气量', res.data)
+                } else {
+                    render3('生物柴油', res.data)	// 柱状图
+                }
+            }
+        });
+    })
+
+    // 排放
+    $('.end-emission .elec .tbs').on('click', 'span', function () {
+        if ($(this).hasClass('active')) return
+
+        $(this).addClass('active')
+        $(this).siblings().removeClass('active')
+
+        var index = $(this).index();
+
+        http({
+            url: 'openness/api/v2/oneweb/out',
+            callback(res) {
+                console.log(res)
+                if (index === 0) {
+                    // 臭氧
+                    render2(1, res.data)
+                } else if (index === 1) {
+                    // 二氧化硫
+                    render2(2, res.data)
+                } else {
+                    // todo 暂时没数据
+                }
+            }
+        });
+    })
+
 
 })  

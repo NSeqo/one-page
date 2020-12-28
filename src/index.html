@@ -336,10 +336,41 @@
         </div>
 
         <!-- 末端排放 -->
+
         <div class="end-emission">
           <div class="panel-title">
             <img src="./assets/images/leaf.png" />
             <span>末端排放</span>
+          </div>
+          <div class="switches">
+            <span>电力</span>
+            <span>排放</span>
+          </div>
+
+          <!-- 电力 饼图  emiss, elec 类名写反了，这里涉及到css,js修改较多，暂时不改了 -->
+          <div class="content emiss">
+            <div class="tbs">
+              <span>发电量</span>
+              <span>沼气量</span>
+              <span>生物柴油</span>
+            </div>
+            <div class="box" id="pie-chart"></div>
+            <!-- 总电量 -->
+            <div class="elec-sum"></div>
+          </div>
+
+          <!-- 排放 柱状图-->
+
+          <div class="content elec">
+            <div class="tbs">
+              <span>O<sub>3</sub></span>
+              <span>SO<sub>2</sub></span>
+              <span>CO</span>
+              <span>NO<sub>2</sub></span>
+            </div>
+            <div class="box" id="bar-chart"></div>
+            <!-- 平均指数 -->
+            <div class="avag-index"></div>
           </div>
         </div>
 

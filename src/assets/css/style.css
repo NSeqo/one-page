@@ -716,10 +716,11 @@ body {
   border-bottom: 1px solid #3281d2;
   cursor: pointer;
   user-select: none;
+  background: rgba(50, 129, 210, 0.5);
 }
 
-.full .right .trend-ana .content .tbs span.active{
-  background-color: #3281D2;
+.full .right .trend-ana .content .tbs span.active {
+  background-color: #3281d2;
 }
 
 .full .right .trend-ana .content .box {
@@ -769,6 +770,7 @@ body {
   color: #cdd6ec;
 }
 
+/* 末端排放 */
 .full .right .end-emission {
   position: absolute;
   width: 617px;
@@ -776,6 +778,119 @@ body {
   right: 640px;
   top: 0;
   background: url("../images/end-emission.png") no-repeat center bottom / 100%;
+}
+
+.full .right .end-emission .elec-sum {
+  position: absolute;
+  z-index: 100;
+  left: 110px;
+  top: 0;
+  font-size: 20px;
+  color: #feffff;
+}
+
+.full .right .end-emission .avag-index {
+  position: absolute;
+  z-index: 100;
+  left: 290px;
+  bottom: 0;
+  font-size: 20px;
+  color: #feffff;
+}
+
+.full .right .end-emission .avag-index span {
+  font-size: 40px;
+  font-family: DIN Condensed;
+  font-weight: bold;
+  color: #00caff;
+}
+
+.full .right .end-emission .elec-sum .num {
+  font-size: 40px;
+  font-family: DIN Condensed;
+  font-weight: bold;
+  color: #00caff;
+}
+
+.full .right .end-emission .switches {
+  position: absolute;
+  width: 168px;
+  height: 34px;
+  background: #0e1831;
+  border: 1px solid #9cd1ff;
+  border-radius: 2px;
+  font-size: 20px;
+  color: #fefeff;
+  display: flex;
+  top: 58px;
+  right: 10px;
+  z-index: 100;
+}
+
+.full .right .end-emission .content {
+  position: absolute;
+  width: 617px;
+  height: 293px;
+  display: flex;
+  box-sizing: border-box;
+  padding: 1px;
+}
+
+.full .right .end-emission .content .box {
+  flex: 1;
+}
+
+.full .right .end-emission .content .tbs {
+  display: flex;
+  flex-direction: column;
+}
+.full .right .end-emission .content .tbs > span {
+  cursor: pointer;
+  user-select: none;
+  background: rgba(50, 129, 210, 0.5);
+}
+.full .right .end-emission .content .tbs > span.active {
+  background-color: #3281d2;
+}
+
+.full .right .end-emission .elec .tbs > span {
+  height: 73px;
+  width: 106px;
+  line-height: 73px;
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+  border-right: 1px solid #3281d2;
+  border-bottom: 1px solid #3281d2;
+  box-sizing: border-box;
+}
+
+.full .right .end-emission .emiss .tbs > span {
+  height: 97px;
+  width: 106px;
+  line-height: 97px;
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+  border-right: 1px solid #3281d2;
+  border-bottom: 1px solid #3281d2;
+  box-sizing: border-box;
+}
+
+.full .right .end-emission .emiss .tbs > span:last-child {
+  color: #00caff;
+}
+
+.full .right .end-emission .switches span {
+  flex: 1;
+  line-height: 34px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.full .right .end-emission .switches span.active {
+  background: #3281d2;
 }
 
 /* 视频监控 */
