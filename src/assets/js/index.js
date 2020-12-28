@@ -402,15 +402,16 @@ $(function () {
                 orient: 'vertical',
                 right: 0,
                 bottom: 0,
-                itemGap:5,
-                itemWidth:20,
-                itemHeight:10,
+                itemGap: 5,
+                itemWidth: 20,
+                itemHeight: 10,
                 data: ['干垃圾', '湿垃圾', '可回', '有害'],
                 textStyle: {
                     color: '#CDD6EC',
                     fontSize: 8 * base,
                     fontFamily: "Microsoft YaHei"
-                }
+                },
+                icon: 'rect'
             },
             series: [
                 {
@@ -463,4 +464,194 @@ $(function () {
 
         }
     })
+
+
+    // 趋势分析
+    function gbCategories(data) {
+        var myChart = echarts.init(document.getElementById('four-trend-chart'));
+        var options = {
+            tooltip: {
+                trigger: 'axis',
+                backgroundColor: '#091E60',
+                textStyle: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei'
+                },
+            },
+            color: ['#38B9F1', '#A07DFC'],
+            legend: {
+                // show: false,
+                data: ['实际量', '预测量'],
+                right: '3%',
+                top: '3%',
+                itemWidth: 20,
+                itemHeight: 10,
+                textStyle: {
+                    color: '#fff',
+                    fontSize: 8 * base,
+                    fontFamily: 'Microsoft YaHei'
+                },
+                icon: 'rect'
+            },
+            grid: {
+                top: '15%',
+                left: '3%',
+                right: '5%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                nameTextStyle: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                type: 'category',
+                boundaryGap: false,
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#3281D2',
+                        width: 2
+                    },
+
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                data: data.map(function (v) {
+                    return v.time
+                })
+            },
+            yAxis: {
+                name: "(t)",
+                nameTextStyle: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                type: 'value',
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#3281D2',
+                        width: 2
+                    },
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    fontSize: 10 * base,
+                    fontFamily: 'Microsoft YaHei',
+                    color: '#fff',
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#232D5E'
+                    }
+                }
+            },
+            series: [
+                {
+                    name: '实际量',
+                    type: 'line',
+                    areaStyle: {
+                        color: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0, color: '#38B9F1' // 0% 处的颜色
+                            }, {
+                                offset: 1, color: 'transparent' // 100% 处的颜色
+                            }],
+                        },
+                    },
+                    // color:'#38B9F1',
+                    smooth: true,
+                    symbol: "none",
+                    data: data.map(function (v) {
+                        return v.weight1
+                    })
+                },
+                {
+                    name: '预测量',
+                    type: 'line',
+                    areaStyle: {
+                        color: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0, color: '#41AE60' // 0% 处的颜色
+                            }, {
+                                offset: 1, color: 'transparent' // 100% 处的颜色
+                            }],
+                        }
+                    },
+                    color: '#41AE60',
+                    smooth: true,
+                    symbol: "none",
+                    data: data.map(function (v) {
+                        return v.weight2
+                    })
+                },
+            ]
+        };
+        myChart.setOption(options);
+
+        // 点击事件
+        myChart.on('click', function (params) {
+            console.log('params', params); // componentType: "markPoint",
+            if (params.componentType === 'markPoint') {
+                //标记点x轴的下标索引
+                var xAxisIndex = params.data.coord[0];
+            }
+        })
+    }
+
+
+    /**趋势分析 tab切换 */
+    $('.trend-ana .content .tbs').on('click', 'span', function () {
+        // console.log(this) 
+        if ($(this).hasClass('active')) return
+        $(this).addClass('active')
+        $(this).siblings().removeClass('active')
+
+        var index = $(this).index(); // 0：干垃圾， 1：湿垃圾， 2：可回收， 4：有害
+
+        http({
+            url: `openness/api/v2/oneweb/clean/trend/1/0/${index}`,
+            callback(res) {
+                var data = res.data || [];
+                if (data.length > 0) {
+                    data = data.map(function (val) {
+                        return {
+                            ...val,
+                            diff: (val.weight1 || 0) - (val.weight2 || 0)
+                        }
+                    })
+                    gbCategories(data);
+                }
+            }
+        })
+
+    })
+    $('.trend-ana .content .tbs span:first-child').trigger('click')
+
+
+
+    
+
 })  

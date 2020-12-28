@@ -682,6 +682,7 @@ body {
   height: 240px;
 }
 
+/* 趋势分析 */
 .full .right .trend-ana {
   position: absolute;
   width: 617px;
@@ -689,6 +690,40 @@ body {
   right: 0;
   top: 360px;
   background: url("../images/trend-ana.png") no-repeat center bottom / 100%;
+}
+
+.full .right .trend-ana .content {
+  height: 261px;
+  display: flex;
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+.full .right .trend-ana .content .tbs {
+  width: 106px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #cdd6ec;
+  display: flex;
+  flex-direction: column;
+}
+.full .right .trend-ana .content .tbs span {
+  flex: 1;
+  text-align: center;
+  line-height: 64px;
+  box-sizing: border-box;
+  border-right: 1px solid #3281d2;
+  border-bottom: 1px solid #3281d2;
+  cursor: pointer;
+  user-select: none;
+}
+
+.full .right .trend-ana .content .tbs span.active{
+  background-color: #3281D2;
+}
+
+.full .right .trend-ana .content .box {
+  flex: 1;
 }
 
 /* 智能应用 */
