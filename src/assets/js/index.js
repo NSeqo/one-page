@@ -22,6 +22,7 @@ function http(params) {
 }
 
 var alertLine = '#c12937';	// 警戒线颜色
+var colArray = ['#fff', '#C19A26', '#f8194e'];		// 白黄红
 
 
 // 右上角的关闭按钮
@@ -390,6 +391,337 @@ $(function () {
 
         });
     }
+
+
+    /** 源头分类 */
+    http({
+        url: "openness/api/v2/oneweb/source",
+        callback: function (res) {
+            var data = res.data || []
+            var flag = res.flag || 0;
+
+            // 右上角的三角形标记
+            if (flag == 1) {
+                $('.left .source .flag').attr('src', './assets/images/warning.png')
+            } else if (flag == 2) {
+                $('.left .source .flag').attr('src', './assets/images/alert.png')
+            } else if (flag == 0) {
+                $('.left .source .flag').hide()
+            }
+
+            // 居民区 单位 商铺 数量赋值
+            $('.left .source .areas > .item:first-child .nums').html(data[0].value);
+            $('.left .source .areas > .item:nth-child(2) .nums').html(data[1].value);
+            $('.left .source .areas > .item:nth-child(3) .nums').html(data[2].value);
+
+
+            // 上半年分类排名
+            /**
+             *              <div class="item">
+                                <div class="no">1</div>
+                                <div class="name">杨浦区</div>
+                            </div>
+             */
+            var areas = data[3].value.split(',');
+            var tempHtml = "";
+            for (let i = 0; i < 6; i++) {
+                tempHtml += `
+                    <div class="item">
+                        <span class="no">${i + 1}</span>
+                        <span class="name">${areas[i]}</span>
+                    </div>
+                `
+            }
+            $('.left .source .ranks .content').html(tempHtml)
+
+            // 全市抽样达标率
+            $('.left .source .sampling .residence .cover').width(data[4].value + '%')
+            $('.left .source .sampling .residence .percent').html(data[4].value + '%')
+            $('.left .source .sampling .compay .cover').width(data[5].value + '%')
+            $('.left .source .sampling .compay .percent').html(data[5].value + '%')
+
+        }
+    });
+
+
+
+    /**
+        生活垃圾
+        
+     */
+    var iconMap = {
+        '清运车': './assets/images/car-qyc.png',
+        '集运车': './assets/images/car-jyc.png',
+        '集装箱': './assets/images/car-jzx.png',
+        '集装船': './assets/images/jzc.png',
+        '中转站': './assets/images/zzz.png',
+        '码头': './assets/images/mt.png',
+        '焚烧厂': './assets/images/fsc.png',
+        '填埋场': './assets/images/tmc.png',
+        '就近设施': './assets/images/jjss.png',
+        '厌氧利用厂': './assets/images/yyc.png',
+        '耗氧利用厂': './assets/images/youyang.png',
+        '服务点': './assets/images/fwd.png',
+        '集散场': './assets/images/jsc.png',
+        '运输车': './assets/images/ysc.png',
+        '暂存点': './assets/images/zzd.png',
+        '市级中转站': './assets/images/sjzzz.png',
+        '处置厂': './assets/images/czc.png',
+    };
+
+    //tab切换
+    var timer1 = null;
+    $('.household-waste .tabs').on('click', '.tb', function () {
+        if ($(this).hasClass('active')) return;
+
+        $(this).addClass('active')
+        $(this).siblings().removeClass('active')
+
+        var type = $(this).index(); // 0, 1,2,3 对应干，湿，可回收， 有害
+
+        http({
+            url: "openness/api/v2/oneweb/garbage/" + type,
+            callback: function (result) {
+                var flag = result.flag || 0;
+
+                if (flag == 1) {
+                    $('.left .household-waste .flag').attr('src', "./assets/images/warning.png")
+                } else if (flag == 2) {
+                    $('.left .household-waste .flag').attr('src', "./assets/images/alert.png")
+                } else if (flag == 0) {
+                    $('.left .household-waste .flag').hide()
+                }
+
+                //
+                var data = result.data || [];
+                var weight = result.weight || {};
+
+                //
+                var html = '';
+                for (var i = 0; i < data.length; i++) {
+                    html += `
+                   <div class="item">
+                        <img src="${iconMap[data[i].name]}"/>
+                        <div class="desc">
+                            <div class="name">${data[i].name}</div>
+                            <div class="num">${data[i].value}</div>
+                        </div>
+                    </div>
+                   `
+                }
+
+                //为了滚动特殊处理一下，
+                if (data.length > 3 && data.length % 3 == 1) {
+                    // 最后一行填充完毕
+                    html += `
+                    <div class="item"></div>
+                    <div class="item"></div>
+                    `
+
+                } else if (data.length > 3 && data.length % 3 == 2) {
+                    html += `
+                    <div class="item"></div>
+                    `
+                }
+
+                // 最后一行复制第一个行，滚动到最后一行的时候，瞬间切换到第一行，给一种无缝切换的错觉
+                if (data.length > 3) {
+                    html += `
+                    <div class="item">
+                        <img src="${iconMap[data[0].name]}"/>
+                        <div class="desc">
+                            <div class="name">${data[0].name}</div>
+                            <div class="num">${data[0].value}</div>
+                        </div>
+                    </div> 
+                    <div class="item">
+                        <img src="${iconMap[data[1].name]}"/>
+                        <div class="desc">
+                            <div class="name">${data[1].name}</div>
+                            <div class="num">${data[1].value}</div>
+                        </div>
+                    </div> 
+                    <div class="item">
+                        <img src="${iconMap[data[2].name]}"/>
+                        <div class="desc">
+                            <div class="name">${data[2].name}</div>
+                            <div class="num">${data[2].value}</div>
+                        </div>
+                    </div> 
+                 `
+                }
+
+                $('.left .household-waste .cars .scroll').html(html);
+
+                //判断数量，每行3个，多于1行滚动
+                if (data.length > 3) {
+                    var rows = Math.ceil(data.length / 3 + 1) // 向上取整
+
+                    if (timer1) clearInterval(timer1)
+
+                    var idx = 0;
+                    $('.left .household-waste .cars .scroll').css('top', 0) // 每次切换干湿可回有害，重置
+
+                    timer1 = setInterval(function () {
+                        $('.left .household-waste .cars .scroll').animate({
+                            top: -100 * idx + 'px'
+                        }, 500, function () {
+                            //判断当前是否是最后一行临界
+                            if (idx++ >= rows - 1) {
+                                $('.left .household-waste .cars .scroll').css('top', 0)
+                                idx = 0 // 重置
+                            }
+
+                        })
+                    }, 3000)
+                }
+
+                // 作业流向
+                function getTypeValue(type) {
+                    for (var i = 0; i < weight.length; i++) {
+                        if (weight[i].type === type) {
+                            return weight[i].weight;
+                        }
+                    }
+                    return 0
+                }
+
+                var feishao = getTypeValue('fenshao');
+                var tianmai = getTypeValue('tianmai');
+
+                if (type === 0) {
+                    $('.left .household-waste .sub-title').html('干垃圾作业流向')
+                    $('.left .household-waste .pictures').html(
+                        `
+                        <img src="./assets/images/flow-g001.png" />
+                        <span style="left: 44%;top: 22%;">${getTypeValue('0,5') + getTypeValue('0,6')}t</span>
+                        <span style="left: 66%;top: 50%;">${getTypeValue('0,3') + getTypeValue('0,4') + getTypeValue('2,3') + getTypeValue('2,4')}t</span>
+                        <span style="left: 17%;top: 50%;">${getTypeValue('0,2')}t</span>
+                        <span style="left: 38%;top: 50%;">${getTypeValue('2,3') + getTypeValue('2,4')}t</span>
+                        <span style="left: 32%;top: 84%;">${getTypeValue('0,3') + getTypeValue('0,4')}t</span>
+                        <span style="left: 87%;top: 47%;">${getTypeValue('0,6') + getTypeValue('2,6')}t</span>
+                        <span style="left: 87%;top: 87%;">${getTypeValue('0,5') + getTypeValue('2,5')}t</span>
+                       `
+                    )
+
+                } else if (type === 1) {
+                    $('.left .household-waste .sub-title').html('湿垃圾作业流向')
+                    $('.left .household-waste .pictures').html(
+                        `
+                        <img src="./assets/images/flow-g002.png" />
+                        <span  style="left: 42%;top: 16%;">${getTypeValue('0,6') + getTypeValue('0,10') + getTypeValue('0,13') + getTypeValue('0,14') || 0}t</span>
+                        <span  style="left: 67%;top: 28%;">${getTypeValue('2,6') + getTypeValue('2,14') || 0}t</span>
+                        <span  style="left: 17%;top: 45%;">${getTypeValue('0,2') || 0}t</span>
+                        <span  style="left: 40%;top: 45%;">${getTypeValue('2,3') + getTypeValue('2,4') || 0}t</span>
+                        <span  style="left: 65%;top: 45%;">${getTypeValue('0,3') + getTypeValue('0,4') + getTypeValue('2,3') + getTypeValue('2,4') + getTypeValue('3,7') || 0}t</span>
+                        <span  style="left: 25%;top: 70%;">${getTypeValue('0,3') + getTypeValue('0,4') || 0}t</span>
+                        <span  style="left: 88%;top: 52%;">${getTypeValue('haoyang') || 0}t</span>
+                        <span  style="left: 88%;top: 93%; font-size:30px">${getTypeValue('yanyang') || 0}t</span>
+                        `
+                    )
+                } else if (type === 2) {
+                    $('.left .household-waste .sub-title').html('可回收物作业流向')
+                    $('.left .household-waste .pictures').html(
+                        `
+                        <img src="./assets/images/flow-g003.png" />
+                        `
+                    )
+                } else if (type === 3) {
+                    $('.left .household-waste .sub-title').html('有害垃圾作业流向')
+                    $('.left .household-waste .pictures').html(
+                        `
+                        <img src="./assets/images/flow-g004.png" />
+                        `
+                    )
+                }
+            }
+
+        })
+    })
+
+    $('.household-waste .tabs .tb:first-child').trigger('click')
+
+
+    /** 
+        今日事件
+     */
+    var timer2 = null;
+
+    http({
+        url: 'openness/api/v2/oneweb/event',
+        callback: function (result) {
+            var data = result.data || [];
+            var html = '';
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                var areaC = '';
+                item.area.split(',').forEach(e => {
+                    if (areaC.includes(e.slice(1))) return;
+                    areaC += '<span style="color:' + colArray[e[0]] + ';">' + e.slice(1) + ',</span>'
+                })
+                areaC = areaC.slice(0, areaC.length - 8) + '</span>'
+
+                //   <div class="tb-row">
+                //     <span>21</span>
+                //     <span>12</span>
+                //     <span>9</span>
+                //     <span>长宁、静安、嘉定</span>
+                //     <span>12315</span>
+                //   </div>
+
+
+                html += `
+                  <div class="tb-row">
+                    <span>${item.num_found}</span>
+                    <span>${item.num_handle}</span>
+                    <span>${item.num_close}</span>
+                    <span>${areaC}</span>
+                    <span>${item.source || ''}</span>
+                  </div>
+                `
+            }
+
+
+            $('.today-events .content .tb-body .wrap').html(html);
+
+            // 滚动显示
+            if (data.length > 1) {
+                //首行赋值一份,视觉错觉
+                var cloned = $('.today-events .content .tb-body .tb-row:first-child').clone()
+                $('.today-events .content .tb-body .wrap').append(cloned)
+
+
+
+                if (timer2) clearInterval(timer2)
+
+                var idx = 0;
+
+                setInterval(function () {
+                    $('.today-events .content .tb-body .wrap').animate({
+                        top: -50 * idx + 'px'
+                    }, 500, function () {
+                        if (idx++ >= data.length + 1) {
+                            $('.today-events .content .tb-body .wrap').css('top', 0)
+                            idx = 0
+                        }
+                    })
+                }, 5000)
+            }
+
+
+
+        }
+    })
+
+
+
+
+
+
+
+
+
+
 
 
     // 上月各类垃圾占比
@@ -847,7 +1179,7 @@ $(function () {
                     show: true,
                     lineStyle: {
                         color: '#3281D2',
-                        width:2
+                        width: 2
                     }
                 },
                 axisTick: {
@@ -874,14 +1206,14 @@ $(function () {
                     show: true,
                     lineStyle: {
                         color: '#3281D2',
-                        width:2
+                        width: 2
                     }
                 },
                 axisTick: {
                     show: false
                 },
                 axisLabel: {
-                    fontSize: 10* base,
+                    fontSize: 10 * base,
                     fontFamily: 'Microsoft YaHei',
                     color: '#fff',
                 },
@@ -935,32 +1267,7 @@ $(function () {
         barChartInstance.setOption(options);
     }
 
-    // 电力和排放两个一级切换
-    var emiss_first = true; // 两个标记量用来确定第一次点击调用函数
-    var elec_first = true;
-    $('.end-emission .switches').on('click', 'span', function () {
-        if ($(this).hasClass('active')) return
-        $(this).addClass('active')
-        $(this).siblings().removeClass('active')
 
-        var index = $(this).index()
-
-        if (index === 0) {
-            $('.end-emission .elec').hide()
-            $('.end-emission .emiss').show()
-            debugger;
-            emiss_first && $('.end-emission .emiss .tbs span:first-child').trigger('click')
-            emiss_first = false
-        } else {
-            $('.end-emission .elec').show()
-            $('.end-emission .emiss').hide()
-            elec_first && $('.end-emission .elec .tbs span:first-child').trigger('click')
-            elec_first = false
-        }
-
-    })
-
-    $('.end-emission .switches span:first-child').trigger('click');
 
     // 二级切换 电力，排放
 
@@ -1143,6 +1450,37 @@ $(function () {
             }
         });
     })
+
+
+    // 电力和排放两个一级切换
+    var emiss_first = true; // 两个标记量用来确定第一次点击调用函数
+    var elec_first = true;
+    $('.end-emission .switches').on('click', 'span', function () {
+        if ($(this).hasClass('active')) return
+        $(this).addClass('active')
+        $(this).siblings().removeClass('active')
+
+        var index = $(this).index()
+
+        if (index === 0) {
+            $('.end-emission .elec').hide()
+            $('.end-emission .emiss').show()
+
+            emiss_first && $('.end-emission .emiss .tbs span:first-child').trigger('click')
+            emiss_first = false
+        } else {
+            $('.end-emission .elec').show()
+            $('.end-emission .emiss').hide()
+            elec_first && $('.end-emission .elec .tbs span:first-child').trigger('click')
+            elec_first = false
+        }
+
+    })
+
+    $('.end-emission .switches span:first-child').trigger('click');
+
+
+
 
 
 })  

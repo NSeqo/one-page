@@ -174,12 +174,21 @@ body {
   color: #0deed7;
 }
 
+/* 源头分类 */
 .left .source {
   position: absolute;
   background: url("../images/source.png") no-repeat center bottom / 100%;
   bottom: 0;
   width: 616px;
   height: 668px;
+}
+
+.left .source .flag {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 10px;
+  top: 64px;
 }
 
 .left .source .areas {
@@ -356,6 +365,14 @@ body {
     100%;
 }
 
+.left .household-waste .flag {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 10px;
+  top: 57px;
+}
+
 .left .household-waste .tabs {
   width: 590px;
   height: 50px;
@@ -391,11 +408,14 @@ body {
   height: 100px;
   overflow: hidden;
   margin-top: 10px;
+  position: relative;
 }
 
 .left .household-waste .cars .scroll {
   display: flex;
   flex-wrap: wrap;
+  position: absolute;
+  width: 100%;
 }
 
 .left .household-waste .cars .scroll .item {
@@ -455,6 +475,14 @@ body {
   height: 100%;
 }
 
+.left .household-waste .pictures span {
+  position: absolute;
+  font-size: 30px;
+  font-family: DIN Condensed;
+  font-weight: bold;
+  color: #cdd6ec;
+}
+
 /* 今日事件 */
 .left .today-events {
   position: absolute;
@@ -503,6 +531,11 @@ body {
 .left .today-events .content .tb-body {
   height: 50px;
   overflow: hidden;
+  position: relative;
+}
+.left .today-events .content .tb-body .wrap {
+  position: absolute;
+  width: 100%;
 }
 
 .left .today-events .content .tb-row {
@@ -527,7 +560,7 @@ body {
   flex: 1.5;
 }
 
-.left .today-events .content .tb-row span:nth-child(-n + 3) {
+.left .today-events .content .tb-row > span:nth-child(-n + 3) {
   font-size: 40px;
   font-family: "DIN Condensed";
   font-weight: bold;
